@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mcf-extensions-jar</artifactId>
+	<packaging>jar</packaging>
+	<name>Apache ManifoldCF SDK - Extensions JAR</name>
+
+	<parent>
+		<groupId>org.apache.manifoldcf</groupId>
+		<artifactId>mcf-sdk</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.manifoldcf</groupId>
+				<artifactId>mcf-core</artifactId>
+				<version>${manifoldcf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.manifoldcf</groupId>
+				<artifactId>mcf-connector-common</artifactId>
+				<version>${manifoldcf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.manifoldcf</groupId>
+				<artifactId>mcf-agents</artifactId>
+				<version>${manifoldcf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.manifoldcf</groupId>
+				<artifactId>mcf-pull-agent</artifactId>
+				<version>${manifoldcf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.manifoldcf</groupId>
+				<artifactId>mcf-ui-core</artifactId>
+				<version>${manifoldcf.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.manifoldcf</groupId>
+			<artifactId>mcf-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.manifoldcf</groupId>
+			<artifactId>mcf-connector-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.manifoldcf</groupId>
+			<artifactId>mcf-agents</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.manifoldcf</groupId>
+			<artifactId>mcf-pull-agent</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.manifoldcf</groupId>
+			<artifactId>mcf-ui-core</artifactId>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
