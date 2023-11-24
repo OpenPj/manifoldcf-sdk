@@ -24,7 +24,7 @@ init() {
 	sed -i -e 's/<?xml version=\"1\.0\" encoding=\"UTF-8\"?>/ /g' connectors/csv/pom.xml; \
 	sed -i -e 's/https\:\/\/maven.nuxeo.org\/nexus\/content\/repositories\/public-releases/https\:\/\/packages.nuxeo.com\/repository\/maven-public-archives/g' build.xml; \
 	sed -i -e 's/https\:\/\/maven.nuxeo.org\/nexus\/content\/repositories\/public-releases\//https\:\/\/packages.nuxeo.com\/repository\/maven-public-archives/g' connectors/nuxeo/pom.xml; \
-	sed -i -e 's/<\/dependencies>/<dependency><groupId>org.apache.hadoop<\/groupId><artifactId>hadoop-annotations<\/artifactId><version>${hadoop.version}<\/version><exclusions><exclusion><groupId>jdk.tools<\/groupId><artifactId>jdk.tools<\/artifactId><\/exclusion><\/exclusions><\/dependency><\/dependencies>/g' connectors/hdfs/pom.xml
+	sed -i -e 's/<\/dependencies>/<dependency><groupId>org.apache.hadoop<\/groupId><artifactId>hadoop-annotations<\/artifactId><version>\${hadoop.version}<\/version><exclusions><exclusion><groupId>jdk.tools<\/groupId><artifactId>jdk.tools<\/artifactId><\/exclusion><\/exclusions><\/dependency><\/dependencies>/g' connectors/hdfs/pom.xml
 	ant make-core-deps make-deps build; \
 	mvn install:install-file -DgroupId=org.apache.manifoldcf -DartifactId=mcf-api-service -Dversion=$mcfversion -Dpackaging=war -Dfile=/usr/src/manifoldcf/dist/web/war/mcf-api-service.war; \
 	mvn install:install-file -DgroupId=org.apache.manifoldcf -DartifactId=mcf-authority-service -Dversion=$mcfversion -Dpackaging=war -Dfile=/usr/src/manifoldcf/dist/web/war/mcf-authority-service.war; \
