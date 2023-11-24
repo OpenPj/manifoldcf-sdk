@@ -18,7 +18,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
 		<maven.dependency.plugin.version>3.6.1</maven.dependency.plugin.version>
-
+		<maven.clean.plugin.version>3.3.2</maven.clean.plugin.version>
 		<postgresql.version>13.1</postgresql.version>
 	</properties>
 
@@ -44,6 +44,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>${maven.dependency.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven.clean.plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>io.fabric8</groupId>
@@ -82,6 +87,24 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+				    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+				    <filesets>
+				        <fileset>
+				            <directory>target</directory>
+				            <includes>
+				                <include>**</include>
+				            </includes>
+				            <excludes>
+				                <exclude>mcf-maven-repo/**</exclude>
+				            </excludes>
+				        </fileset>
+				    </filesets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -94,7 +117,8 @@
 		<repository>
 			<id>mcf-maven-repo</id>
 			<name>ManifoldCF Local Repo</name>
-			<url>file:target/mcf-maven-repo</url>
+			<layout>default</layout>
+			<url>file:target/mcf-maven-repo/repository</url>
 		</repository>
 	</repositories>
 

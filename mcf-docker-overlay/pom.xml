@@ -112,7 +112,6 @@
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
-					<extensions>true</extensions>
 					<keepRunning>false</keepRunning>
 					<skip>false</skip>
 					<showLogs>true</showLogs>
@@ -188,24 +187,24 @@
 							<driver>local</driver>
 						</volume>
 					</volumes>
-					<executions>
-						<execution>
-							<id>start-docker</id>
-							<phase>pre-integration-test</phase>
-							<goals>
-								<goal>build</goal>
-								<goal>start</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>stop-docker</id>
-							<phase>post-integration-test</phase>
-							<goals>
-								<goal>stop</goal>
-							</goals>
-						</execution>
-					</executions>
 				</configuration>
+				<executions>
+					<execution>
+						<id>start-docker</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-docker</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
