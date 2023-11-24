@@ -1,4 +1,4 @@
-# Apache ManifoldCF SDK 0.0.3-SNAPSHOT
+# Apache ManifoldCF SDK 0.0.3
 This is the SDK project of Apache ManifoldCF dedicated to developers that need to extend the platform with new components, connectors or integrations using Maven and Docker. On the other hand this SDK can be extremely useful also for all the developers who want to contribute to the ManifoldCF project.
 This project is started with an initial contribution by @OpenPj and @binduwavell.
 

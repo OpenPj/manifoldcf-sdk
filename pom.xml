@@ -3,7 +3,7 @@
 	<groupId>org.apache.manifoldcf</groupId>
 	<artifactId>mcf-sdk</artifactId>
 	<name>Apache ManifoldCF SDK</name>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>pom</packaging>
 	
 	<properties>
