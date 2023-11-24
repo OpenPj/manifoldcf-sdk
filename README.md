@@ -1,4 +1,4 @@
-# Apache ManifoldCF SDK
+# Apache ManifoldCF SDK 0.0.2-SNAPSHOT
 This is the SDK project of Apache ManifoldCF dedicated to developers that need to extend the platform with new components, connectors or integrations using Maven and Docker. On the other hand this SDK can be extremely useful also for all the developers who want to contribute to the ManifoldCF project.
 This project is started with an initial contribution by @OpenPj and @binduwavell.
 
@@ -9,7 +9,7 @@ The SDK will take care of the following tasks:
 * Copying the entire Maven Repo in the Maven target folder in the host machine (locally)
 
 Examples of commands using the main bash script for a typical usage:
-* `./run.sh init 2.21 ga` -> start the init process for ManifoldCF 2.21 GA
+* `./run.sh init 2.26 ga` -> start the init process for ManifoldCF 2.26 GA
 * `mvn clean install docker:build docker:start` -> build extensions and run everything with Docker locally
 * `mvn docker:stop` -> stop all the containers (MCF and PostgreSQL)
 
@@ -26,11 +26,11 @@ The initialization command consists of the following arguments:
 * MCF version
 * MCF distribution: ga for GA release and rc for a Release Candidate
 
-Example for initializing ManifoldCF 2.21 GA release:
-* `./run.sh init 2.21 ga`
+Example for initializing ManifoldCF 2.26 GA release:
+* `./run.sh init 2.26 ga`
 
-Example for initializing ManifoldCF 2.22.1 RC release:
-* `./run.sh init 2.22.1 rc`
+Example for initializing ManifoldCF 2.27.1 RC release:
+* `./run.sh init 2.27.1 rc`
 
 The initialization process will be executed with the following command:
 * `/run.sh init 2.21 ga`

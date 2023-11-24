@@ -18,9 +18,14 @@ init() {
     
     echo "Building the Docker Container for executing Ant and Maven build..."
 	docker build --build-arg MCF_VERSION=$mcfversionInFuction --build-arg MCF_DIST_URL=$mcfdistInFunction src/main/docker -t mcf-sdk-init
-	
+
 	echo "Starting the mcf-sdk-build-container for executing the Maven and Ant building process..."
-	docker run -it --rm --name mcf-sdk-init-container -v mcf-maven-repo:/root/.m2 -v mcf-app-volume:/usr/src/manifoldcf -t mcf-sdk-init /bin/bash -c "ant make-core-deps make-deps build; \
+	docker run -it --rm --name mcf-sdk-init-container -v mcf-maven-repo:/root/.m2 -v mcf-app-volume:/usr/src/manifoldcf -t mcf-sdk-init /bin/bash -c "sed -i -e 's/<fileset dir=\"test-materials\" excludes/<fileset dir=\"test-materials\" erroronmissingdir=\"false\" excludes/g' connectors/solr/build.xml; \
+	sed -i -e 's/<?xml version=\"1\.0\" encoding=\"UTF-8\"?>/ /g' connectors/csv/pom.xml; \
+	sed -i -e 's/https\:\/\/maven.nuxeo.org\/nexus\/content\/repositories\/public-releases/https\:\/\/packages.nuxeo.com\/repository\/maven-public-archives/g' build.xml; \
+	sed -i -e 's/https\:\/\/maven.nuxeo.org\/nexus\/content\/repositories\/public-releases\//https\:\/\/packages.nuxeo.com\/repository\/maven-public-archives/g' connectors/nuxeo/pom.xml; \
+	sed -i -e 's/<hadoop.version>2.6.0<\/hadoop.version>/<hadoop.version>3.3.6<\/hadoop.version>/g' pom.xml; \
+	ant make-core-deps make-deps build; \
 	mvn install:install-file -DgroupId=org.apache.manifoldcf -DartifactId=mcf-api-service -Dversion=$mcfversion -Dpackaging=war -Dfile=/usr/src/manifoldcf/dist/web/war/mcf-api-service.war; \
 	mvn install:install-file -DgroupId=org.apache.manifoldcf -DartifactId=mcf-authority-service -Dversion=$mcfversion -Dpackaging=war -Dfile=/usr/src/manifoldcf/dist/web/war/mcf-authority-service.war; \
 	mvn install:install-file -DgroupId=org.apache.manifoldcf -DartifactId=mcf-combined-service -Dversion=$mcfversion -Dpackaging=war -Dfile=/usr/src/manifoldcf/dist/web/war/mcf-combined-service.war; \
@@ -62,7 +67,7 @@ case "$1" in
   init)
     if [ ! -n "$mcfversion" ]
 	then
-	    echo "$0 - Error ManifoldCF version is not set. Usage for using ManifoldCF 2.21: $0 init 2.21 ga"
+	    echo "$0 - Error ManifoldCF version is not set. Usage for using ManifoldCF 2.26: $0 init 2.26 ga"
 	    exit 1
 	else
 	    echo "ManifoldCF version is correctly set"
