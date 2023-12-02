@@ -2,21 +2,21 @@
 mcfversion=$2
 mcfdist=$3
 
-echo "Starting Apache ManifoldCF SDK initialization for version $mcfversion"
-
 init() {
+	echo "Starting Apache ManifoldCF SDK initialization for version $mcfversion"
+
 	mcfversionInFuction=$1
 	echo "Init - 1 = $1"
 	mcfdistInFunction=$2
 	echo "Init - 2 = $2"
     
-    echo "Creating Docker Volume for the ManifoldCF Maven Repository"
-    docker volume create --name mcf-maven-repo
+  echo "Creating Docker Volume for the ManifoldCF Maven Repository"
+  docker volume create --name mcf-maven-repo
     
-    echo "Creating Docker Volume for the ManifoldCF Installation..."
-    docker volume create --name mcf-app-volume
+  echo "Creating Docker Volume for the ManifoldCF Installation..."
+  docker volume create --name mcf-app-volume
     
-    echo "Building the Docker Container for executing Ant and Maven build..."
+  echo "Building the Docker Container for executing Ant and Maven build..."
 	docker build --build-arg MCF_VERSION=$mcfversionInFuction --build-arg MCF_DIST_URL=$mcfdistInFunction src/main/docker -t mcf-sdk-init
 
 	echo "Starting the mcf-sdk-build-container for executing the Maven and Ant building process..."
@@ -46,6 +46,41 @@ init() {
 	#cp -n target/mcf-maven-repo $HOME/.m2
 }
 
+build_start() {
+	echo "Building with Maven skipping tests and run Docker containers"
+	mvn clean install docker:build docker:start -DskipTests -DskipITs
+}
+
+build() {
+	echo "Building with Maven skipping tests"
+	mvn clean install -DskipTests -DskipITs
+}
+
+build_test() {
+	echo "Building with Maven executing tests"
+	mvn clean install
+}
+
+unittests() {
+	echo "Executing unit tests"
+	mvn clean test
+}
+
+integrationtests() {
+	echo "Executing integration tests"
+	mvn clean integration-test
+}
+
+start() {
+	echo "Run ManifoldCF Docker containers"
+	mvn docker:start
+}
+
+stop() {
+	echo "Stop ManifoldCF Docker containers"
+	mvn docker:stop
+}
+
 test() {
 	echo "Starting the mcf-sdk-test-container to execute unit and integration tests"
 	docker run -it --rm -v mcf-maven-repo:/root/.m2 -v mcf-app-volume:/usr/src/manifoldcf -t mcf-sdk-init ant test
@@ -59,8 +94,8 @@ clean() {
 purge() {
 	echo "Removing the ManifoldCF Maven repo and installation volumes"
 	docker volume rm mcf-maven-repo
-    docker volume rm mcf-app-volume
-    docker image rm mcf-sdk-init
+  docker volume rm mcf-app-volume
+  docker image rm mcf-sdk-init
 }
 
 case "$1" in
@@ -93,6 +128,21 @@ case "$1" in
   clean)
     clean
     ;;
+  build_start)
+		build_start
+		;;
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	unittests)
+		unittests
+		;;
+	integrationtests)
+		integrationtests
+		;;
   test)
     test
     ;;
@@ -100,5 +150,5 @@ case "$1" in
     purge
     ;;
   *)
-    echo "Usage: $0 {init|clean|test|purge}"
+    echo "Usage: $0 {init|clean|build_start|start|stop|unittests|integrationtests|test|purge}"
 esac
