@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>mcf-docker-overlay</artifactId>
 	<packaging>jar</packaging>
@@ -7,7 +9,7 @@
 	<parent>
 		<groupId>org.apache.manifoldcf</groupId>
 		<artifactId>mcf-sdk</artifactId>
-		<version>0.0.4-SNAPSHOT</version>
+		<version>0.0.4</version>
 	</parent>
 
 	<properties>
@@ -163,7 +165,7 @@
 									<alias>mcf-postgres</alias>
 								</network>
 								<env>
-								    <POSTGRES_HOST_AUTH_METHOD>trust</POSTGRES_HOST_AUTH_METHOD>
+									<POSTGRES_HOST_AUTH_METHOD>trust</POSTGRES_HOST_AUTH_METHOD>
 									<POSTGRES_DB>${docker.mcf.database.server.db.name}</POSTGRES_DB>
 									<POSTGRES_USER>${docker.mcf.database.username}</POSTGRES_USER>
 									<!--<POSTGRES_PASSWORD>${docker.mcf.database.password}</POSTGRES_PASSWORD> -->
@@ -191,5 +193,47 @@
 			</plugin>
 		</plugins>
 	</build>
+	 
+	<profiles>
+		<profile>
+			<id>only-eclipse</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>${maven.lifecycle.mapping.plugin.version}</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.apache.maven.plugins</groupId>
+												<artifactId>maven-dependency-plugin</artifactId>
+												<versionRange>${maven-dependency-plugin.version}</versionRange>
+												<goals>
+													<goal>copy</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore />
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+
+		</profile>
+	</profiles>
 
 </project>
